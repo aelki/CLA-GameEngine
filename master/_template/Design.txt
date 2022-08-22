@@ -1,0 +1,52 @@
+
+
+CLA Game Engine Design
+
+
+===== Naming Conventions
+- nameThis - Dedicated for internal variables
+- name_this - Dedicated to settings function,
+			  specifically the ones you can alter in-code.
+- NameThis - I have no idea.
+- 
+
+===== Naming Conventions based on needs
+- arguments
+- variables
+
+===== Main.cpp
+- Contains Game class object for run loop initialization.
+- Contains test functions for debugging purposes without using Game loop.
+
+===== Game.h
+- Contains game loop for running the game.
+- Contains initialization for the following:
+	- sf::RenderWindow
+	- (x) Event (excluded to be moved to SceneManager)
+	- sf::Clock, sf::Time
+	- StateManager for managing state.
+		- GameState manager should contain:
+			- Init() or OnEntry()
+			- Cleanup() or OnExit()
+			- Pause(), Resume()
+			- HandleEvents(), Update(), Draw()
+		- Game class needs the following function.
+			- ChangeState(GameState* state)
+			- PushState(GameState state)
+			- PopState()
+		- Who uses or calls these State functions?
+			- When player interacts with something (Scene/ECS)
+			- When player presses a button in-game (ECS?)
+			- When an event happens (Scene)
+	- ActiveWindow
+		- There is only one window per game. Global Variable is okay.
+		- Contains sf::RenderWindow* window and bool is_running.
+	- Keys
+		- Key Inputs to be applied to all derived keybinds.
+	- Debugs
+		- Special Init that can't be done in other inits or run loops.
+- Main Functions
+	- update(dt)
+	- render()
+
+===== Game.cpp
